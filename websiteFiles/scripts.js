@@ -85,7 +85,19 @@ function showPantry() {
   pantryList.innerHTML = "";
   for (var i = 0; i < pantry.length; i++) {
     var li = document.createElement("li");
-    li.innerHTML = pantry[i].name + " - " + pantry[i].quantity + " - " + pantry[i].expiration + " <button class='remove'>Remove</button> <button class='edit'>Edit</button>";
+    currentPage = window.location.pathname.split("/").pop();
+    if (currentPage === "addItem.html") {
+      li.innerHTML = pantry[i].name + " - " + pantry[i].quantity + " - " + pantry[i].expiration + " <button class='remove'>Remove</button> <button class='edit'>Edit</button>";
+    }
+    else{
+      li.innerHTML = pantry[i].name + " - " + pantry[i].quantity + " - " + pantry[i].expiration;
+    }
+    if (pantry[i].isOpened) {
+      li.classList.add("opened");
+    }
+    if (pantry[i].expiration - date.toISOString().split('T')[0] < 0) {
+      li.classList.add("expired");
+    }
     pantryList.appendChild(li);
   }
   console.log("Pantry displayed: " + JSON.stringify(pantry));
